@@ -23,7 +23,15 @@ function App() {
 
   const [ user, setUser ] = useState();
   const [ images, setImages ] = useState([])
+  const [network, setNetwork] = useState("");
 
+  useEffect(()=>{
+      // This is an event listener for all messages that are sent to the window
+      window.addEventListener("message", d => {
+      // This only works for Lilico testnet to mainnet changes
+        if(d.data.type==='LILICO:NETWORK') setNetwork(d.data.network)
+      })
+    }, [])
   const logIn = () => {
     fcl.authenticate();
   };
